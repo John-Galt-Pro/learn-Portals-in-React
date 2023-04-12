@@ -6,10 +6,24 @@ import './App.css';
 
 class Form extends Component {
 
+    state = {
+        advOpen: false
+    }
+
+    componentDidMount() {
+        setTimeout(this.handleClick, 3000)
+    }
+
+    handleClick = () => {
+        this.setState(({advOpen}) => ({
+            advOpen: !advOpen
+        }) )
+    }
+
     render() {
         return (
             <Container>
-                <form className="w-50 border mt-5 p-3 m-auto"
+                <form onClick={this.handleClick} className="w-50 border mt-5 p-3 m-auto"
                 style={{'overflow': 'hidden',
                         'position': 'relative'}}>
                     <div className="mb-3">
@@ -20,9 +34,12 @@ class Form extends Component {
                         <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
                         <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
-                    <Portal>
-                        <Msg/>
-                    </Portal>
+                    {
+                        this.state.advOpen ?
+                            <Portal>
+                                <Msg/>
+                            </Portal> : null
+                    }
                 </form>
             </Container>
         )
